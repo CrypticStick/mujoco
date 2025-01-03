@@ -5719,6 +5719,11 @@ public unsafe struct mjrContext_ {
 }
 
 [StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsElement_ {
+  public mjtObj elemtype;
+}
+
+[StructLayout(LayoutKind.Sequential)]
 public unsafe struct mjsCompiler_ {
   public byte autolimits;
   public double boundmass;
@@ -5735,6 +5740,525 @@ public unsafe struct mjsCompiler_ {
   public fixed int inertiagrouprange[2];
   public int alignfree;
   public mjLROpt_ LRopt;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjSpec_ {
+  public mjsElement_* element;
+  public void* modelname; // mjString*
+  public mjsCompiler_ compiler;
+  public byte strippath;
+  public void* meshdir; // mjString*
+  public void* texturedir; // mjString*
+  public mjOption_ option;
+  public mjVisual_ visual;
+  public mjStatistic_ stat;
+  public UIntPtr memory;
+  public int nemax;
+  public int nuserdata;
+  public int nuser_body;
+  public int nuser_jnt;
+  public int nuser_geom;
+  public int nuser_site;
+  public int nuser_cam;
+  public int nuser_tendon;
+  public int nuser_actuator;
+  public int nuser_sensor;
+  public int nkey;
+  public int njmax;
+  public int nconmax;
+  public UIntPtr nstack;
+  public void* comment; // mjString*
+  public void* modelfiledir; // mjString*
+  public byte hasImplicitPluginElem;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsOrientation_ {
+  public mjtOrientation type;
+  public fixed double axisangle[4];
+  public fixed double xyaxes[6];
+  public fixed double zaxis[3];
+  public fixed double euler[3];
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsPlugin_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* plugin_name; // mjString*
+  public byte active;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsBody_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* childclass; // mjString*
+  public fixed double pos[3];
+  public fixed double quat[4];
+  public mjsOrientation_ alt;
+  public double mass;
+  public fixed double ipos[3];
+  public fixed double iquat[4];
+  public fixed double inertia[3];
+  public mjsOrientation_ ialt;
+  public fixed double fullinertia[6];
+  public byte mocap;
+  public double gravcomp;
+  public void* userdata; // mjDoubleVec*
+  public byte explicitinertial;
+  public mjsPlugin_ plugin;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsFrame_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* childclass; // mjString*
+  public fixed double pos[3];
+  public fixed double quat[4];
+  public mjsOrientation_ alt;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsJoint_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtJoint type;
+  public fixed double pos[3];
+  public fixed double axis[3];
+  public double ref_;
+  public int align;
+  public double stiffness;
+  public double springref;
+  public fixed double springdamper[2];
+  public int limited;
+  public fixed double range[2];
+  public double margin;
+  public fixed double solref_limit[mjNREF];
+  public fixed double solimp_limit[mjNIMP];
+  public int actfrclimited;
+  public fixed double actfrcrange[2];
+  public double armature;
+  public double damping;
+  public double frictionloss;
+  public fixed double solref_friction[mjNREF];
+  public fixed double solimp_friction[mjNIMP];
+  public int group;
+  public byte actgravcomp;
+  public void* userdata; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsGeom_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtGeom type;
+  public fixed double pos[3];
+  public fixed double quat[4];
+  public mjsOrientation_ alt;
+  public fixed double fromto[6];
+  public fixed double size[3];
+  public int contype;
+  public int conaffinity;
+  public int condim;
+  public int priority;
+  public fixed double friction[3];
+  public double solmix;
+  public fixed double solref[mjNREF];
+  public fixed double solimp[mjNIMP];
+  public double margin;
+  public double gap;
+  public double mass;
+  public double density;
+  public mjtGeomInertia typeinertia;
+  public double fluid_ellipsoid;
+  public fixed double fluid_coefs[5];
+  public void* material; // mjString*
+  public fixed float rgba[4];
+  public int group;
+  public void* hfieldname; // mjString*
+  public void* meshname; // mjString*
+  public double fitscale;
+  public void* userdata; // mjDoubleVec*
+  public mjsPlugin_ plugin;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsSite_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public fixed double pos[3];
+  public fixed double quat[4];
+  public mjsOrientation_ alt;
+  public fixed double fromto[6];
+  public fixed double size[3];
+  public mjtGeom type;
+  public void* material; // mjString*
+  public int group;
+  public fixed float rgba[4];
+  public void* userdata; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsCamera_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public fixed double pos[3];
+  public fixed double quat[4];
+  public mjsOrientation_ alt;
+  public mjtCamLight mode;
+  public void* targetbody; // mjString*
+  public int orthographic;
+  public double fovy;
+  public double ipd;
+  public fixed float intrinsic[4];
+  public fixed float sensor_size[2];
+  public fixed float resolution[2];
+  public fixed float focal_length[2];
+  public fixed float focal_pixel[2];
+  public fixed float principal_length[2];
+  public fixed float principal_pixel[2];
+  public void* userdata; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsLight_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public fixed double pos[3];
+  public fixed double dir[3];
+  public mjtCamLight mode;
+  public void* targetbody; // mjString*
+  public byte active;
+  public byte directional;
+  public byte castshadow;
+  public double bulbradius;
+  public fixed float attenuation[3];
+  public float cutoff;
+  public float exponent;
+  public fixed float ambient[3];
+  public fixed float diffuse[3];
+  public fixed float specular[3];
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsFlex_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public int contype;
+  public int conaffinity;
+  public int condim;
+  public int priority;
+  public fixed double friction[3];
+  public double solmix;
+  public fixed double solref[mjNREF];
+  public fixed double solimp[mjNIMP];
+  public double margin;
+  public double gap;
+  public int dim;
+  public double radius;
+  public byte internal_;
+  public byte flatskin;
+  public int selfcollide;
+  public int activelayers;
+  public int group;
+  public double edgestiffness;
+  public double edgedamping;
+  public fixed float rgba[4];
+  public void* material; // mjString*
+  public double young;
+  public double poisson;
+  public double damping;
+  public double thickness;
+  public void* vertbody; // mjStringVec*
+  public void* vert; // mjDoubleVec*
+  public void* elem; // mjIntVec*
+  public void* texcoord; // mjFloatVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsMesh_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* content_type; // mjString*
+  public void* file; // mjString*
+  public fixed double refpos[3];
+  public fixed double refquat[4];
+  public fixed double scale[3];
+  public mjtMeshInertia inertia;
+  public byte smoothnormal;
+  public int maxhullvert;
+  public void* uservert; // mjFloatVec*
+  public void* usernormal; // mjFloatVec*
+  public void* usertexcoord; // mjFloatVec*
+  public void* userface; // mjIntVec*
+  public void* userfacetexcoord; // mjIntVec*
+  public mjsPlugin_ plugin;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsHField_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* content_type; // mjString*
+  public void* file; // mjString*
+  public fixed double size[4];
+  public int nrow;
+  public int ncol;
+  public void* userdata; // mjFloatVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsSkin_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* file; // mjString*
+  public void* material; // mjString*
+  public fixed float rgba[4];
+  public float inflate;
+  public int group;
+  public void* vert; // mjFloatVec*
+  public void* texcoord; // mjFloatVec*
+  public void* face; // mjIntVec*
+  public void* bodyname; // mjStringVec*
+  public void* bindpos; // mjFloatVec*
+  public void* bindquat; // mjFloatVec*
+  public void* vertid; // mjIntVecVec*
+  public void* vertweight; // mjFloatVecVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsTexture_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtTexture type;
+  public int builtin;
+  public int mark;
+  public fixed double rgb1[3];
+  public fixed double rgb2[3];
+  public fixed double markrgb[3];
+  public double random;
+  public int height;
+  public int width;
+  public int nchannel;
+  public void* content_type; // mjString*
+  public void* file; // mjString*
+  public fixed int gridsize[2];
+  public fixed char gridlayout[13];
+  public void* cubefiles; // mjStringVec*
+  public byte hflip;
+  public byte vflip;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsMaterial_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* textures; // mjStringVec*
+  public byte texuniform;
+  public fixed float texrepeat[2];
+  public float emission;
+  public float specular;
+  public float shininess;
+  public float reflectance;
+  public float metallic;
+  public float roughness;
+  public fixed float rgba[4];
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsPair_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* geomname1; // mjString*
+  public void* geomname2; // mjString*
+  public int condim;
+  public fixed double solref[mjNREF];
+  public fixed double solreffriction[mjNREF];
+  public fixed double solimp[mjNIMP];
+  public double margin;
+  public double gap;
+  public fixed double friction[5];
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsExclude_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* bodyname1; // mjString*
+  public void* bodyname2; // mjString*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsEquality_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtEq type;
+  public fixed double data[mjNEQDATA];
+  public byte active;
+  public void* name1; // mjString*
+  public void* name2; // mjString*
+  public mjtObj objtype;
+  public fixed double solref[mjNREF];
+  public fixed double solimp[mjNIMP];
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsTendon_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public double stiffness;
+  public fixed double springlength[2];
+  public double damping;
+  public double frictionloss;
+  public fixed double solref_friction[mjNREF];
+  public fixed double solimp_friction[mjNIMP];
+  public int limited;
+  public fixed double range[2];
+  public double margin;
+  public fixed double solref_limit[mjNREF];
+  public fixed double solimp_limit[mjNIMP];
+  public void* material; // mjString*
+  public double width;
+  public fixed float rgba[4];
+  public int group;
+  public void* userdata; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsWrap_ {
+  public mjsElement_* element;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsActuator_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtGain gaintype;
+  public fixed double gainprm[mjNGAIN];
+  public mjtBias biastype;
+  public fixed double biasprm[mjNGAIN];
+  public mjtDyn dyntype;
+  public fixed double dynprm[mjNDYN];
+  public int actdim;
+  public byte actearly;
+  public mjtTrn trntype;
+  public fixed double gear[6];
+  public void* target; // mjString*
+  public void* refsite; // mjString*
+  public void* slidersite; // mjString*
+  public double cranklength;
+  public fixed double lengthrange[2];
+  public double inheritrange;
+  public int ctrllimited;
+  public fixed double ctrlrange[2];
+  public int forcelimited;
+  public fixed double forcerange[2];
+  public int actlimited;
+  public fixed double actrange[2];
+  public int group;
+  public void* userdata; // mjDoubleVec*
+  public mjsPlugin_ plugin;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsSensor_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjtSensor type;
+  public mjtObj objtype;
+  public void* objname; // mjString*
+  public mjtObj reftype;
+  public void* refname; // mjString*
+  public mjtDataType datatype;
+  public mjtStage needstage;
+  public int dim;
+  public double cutoff;
+  public double noise;
+  public void* userdata; // mjDoubleVec*
+  public mjsPlugin_ plugin;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsNumeric_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* data; // mjDoubleVec*
+  public int size;
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsText_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* data; // mjString*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsTuple_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public void* objtype; // mjIntVec*
+  public void* objname; // mjStringVec*
+  public void* objprm; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsKey_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public double time;
+  public void* qpos; // mjDoubleVec*
+  public void* qvel; // mjDoubleVec*
+  public void* act; // mjDoubleVec*
+  public void* mpos; // mjDoubleVec*
+  public void* mquat; // mjDoubleVec*
+  public void* ctrl; // mjDoubleVec*
+  public void* info; // mjString*
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct mjsDefault_ {
+  public mjsElement_* element;
+  public void* name; // mjString*
+  public mjsJoint_* joint;
+  public mjsGeom_* geom;
+  public mjsSite_* site;
+  public mjsCamera_* camera;
+  public mjsLight_* light;
+  public mjsFlex_* flex;
+  public mjsMesh_* mesh;
+  public mjsMaterial_* material;
+  public mjsPair_* pair;
+  public mjsEquality_* equality;
+  public mjsTendon_* tendon;
+  public mjsActuator_* actuator;
 }
 
 [StructLayout(LayoutKind.Sequential)]
@@ -6568,6 +7092,372 @@ public static unsafe extern void mj_setConst(mjModel_* m, mjData_* d);
 
 [DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
 public static unsafe extern int mj_setLengthRange(mjModel_* m, mjData_* d, int index, mjLROpt_* opt, StringBuilder error, int error_sz);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjSpec_* mj_makeSpec();
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjSpec_* mj_copySpec(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mj_deleteSpec(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern int mjs_activatePlugin(mjSpec_* s, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+[return: MarshalAs(UnmanagedType.LPStr)]
+public static unsafe extern string mjs_getError(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern int mjs_isWarning(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_attachBody(mjsFrame_* parent, mjsBody_* child, [MarshalAs(UnmanagedType.LPStr)]string prefix, [MarshalAs(UnmanagedType.LPStr)]string suffix);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFrame_* mjs_attachFrame(mjsBody_* parent, mjsFrame_* child, [MarshalAs(UnmanagedType.LPStr)]string prefix, [MarshalAs(UnmanagedType.LPStr)]string suffix);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_attachToSite(mjsSite_* parent, mjsBody_* child, [MarshalAs(UnmanagedType.LPStr)]string prefix, [MarshalAs(UnmanagedType.LPStr)]string suffix);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern int mjs_detachBody(mjSpec_* s, mjsBody_* b);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_addBody(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSite_* mjs_addSite(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsJoint_* mjs_addJoint(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsJoint_* mjs_addFreeJoint(mjsBody_* body);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsGeom_* mjs_addGeom(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsCamera_* mjs_addCamera(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsLight_* mjs_addLight(mjsBody_* body, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFrame_* mjs_addFrame(mjsBody_* body, mjsFrame_* parentframe);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_delete(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsActuator_* mjs_addActuator(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSensor_* mjs_addSensor(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFlex_* mjs_addFlex(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsPair_* mjs_addPair(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsExclude_* mjs_addExclude(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsEquality_* mjs_addEquality(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTendon_* mjs_addTendon(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsWrap_* mjs_wrapSite(mjsTendon_* tendon, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsWrap_* mjs_wrapGeom(mjsTendon_* tendon, [MarshalAs(UnmanagedType.LPStr)]string name, [MarshalAs(UnmanagedType.LPStr)]string sidesite);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsWrap_* mjs_wrapJoint(mjsTendon_* tendon, [MarshalAs(UnmanagedType.LPStr)]string name, double coef);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsWrap_* mjs_wrapPulley(mjsTendon_* tendon, double divisor);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsNumeric_* mjs_addNumeric(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsText_* mjs_addText(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTuple_* mjs_addTuple(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsKey_* mjs_addKey(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsPlugin_* mjs_addPlugin(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsDefault_* mjs_addDefault(mjSpec_* s, [MarshalAs(UnmanagedType.LPStr)]string classname, mjsDefault_* parent);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsMesh_* mjs_addMesh(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsHField_* mjs_addHField(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSkin_* mjs_addSkin(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTexture_* mjs_addTexture(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsMaterial_* mjs_addMaterial(mjSpec_* s, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjSpec_* mjs_getSpec(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjSpec_* mjs_findSpec(mjSpec_* spec, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_findBody(mjSpec_* s, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsElement_* mjs_findElement(mjSpec_* s, mjtObj type, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_findChild(mjsBody_* body, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFrame_* mjs_findFrame(mjSpec_* s, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsDefault_* mjs_getDefault(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsDefault_* mjs_findDefault(mjSpec_* s, [MarshalAs(UnmanagedType.LPStr)]string classname);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsDefault_* mjs_getSpecDefault(mjSpec_* s);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern int mjs_getId(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsElement_* mjs_firstChild(mjsBody_* body, mjtObj type, int recurse);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsElement_* mjs_nextChild(mjsBody_* body, mjsElement_* child, int recurse);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsElement_* mjs_firstElement(mjSpec_* s, mjtObj type);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsElement_* mjs_nextElement(mjSpec_* s, mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setBuffer(void* dest, void* array, int size); // mjByteVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setString(void* dest, [MarshalAs(UnmanagedType.LPStr)]string text); // mjString* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setStringVec(void* dest, [MarshalAs(UnmanagedType.LPStr)]string text); // mjStringVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern byte mjs_setInStringVec(void* dest, int i, [MarshalAs(UnmanagedType.LPStr)]string text); // mjStringVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_appendString(void* dest, [MarshalAs(UnmanagedType.LPStr)]string text); // mjStringVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setInt(void* dest, int* array, int size); // mjIntVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_appendIntVec(void* dest, int* array, int size); // mjIntVecVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setFloat(void* dest, float* array, int size); // mjFloatVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_appendFloatVec(void* dest, float* array, int size); // mjFloatVecVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setDouble(void* dest, double* array, int size); // mjDoubleVec* dest
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setPluginAttributes(mjsPlugin_* plugin, void* attributes);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+[return: MarshalAs(UnmanagedType.LPStr)]
+public static unsafe extern string mjs_getString(void* source); // mjString* source
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern double* mjs_getDouble(void* source, int* size); // mjDoubleVec* source
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setDefault(mjsElement_* element, mjsDefault_* def);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_setFrame(mjsElement_* dest, mjsFrame_* frame);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+[return: MarshalAs(UnmanagedType.LPStr)]
+public static unsafe extern string mjs_resolveOrientation(double[] quat, byte degree, [MarshalAs(UnmanagedType.LPStr)]string sequence, mjsOrientation_* orientation);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFrame_* mjs_bodyToFrame(mjsBody_** body);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultSpec(mjSpec_* spec);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultOrientation(mjsOrientation_* orient);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultBody(mjsBody_* body);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultFrame(mjsFrame_* frame);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultJoint(mjsJoint_* joint);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultGeom(mjsGeom_* geom);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultSite(mjsSite_* site);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultCamera(mjsCamera_* camera);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultLight(mjsLight_* light);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultFlex(mjsFlex_* flex);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultMesh(mjsMesh_* mesh);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultHField(mjsHField_* hfield);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultSkin(mjsSkin_* skin);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultTexture(mjsTexture_* texture);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultMaterial(mjsMaterial_* material);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultPair(mjsPair_* pair);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultEquality(mjsEquality_* equality);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultTendon(mjsTendon_* tendon);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultActuator(mjsActuator_* actuator);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultSensor(mjsSensor_* sensor);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultNumeric(mjsNumeric_* numeric);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultText(mjsText_* text);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultTuple(mjsTuple_* tuple);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultKey(mjsKey_* key);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern void mjs_defaultPlugin(mjsPlugin_* plugin);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsBody_* mjs_asBody(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsGeom_* mjs_asGeom(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsJoint_* mjs_asJoint(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSite_* mjs_asSite(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsCamera_* mjs_asCamera(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsLight_* mjs_asLight(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFrame_* mjs_asFrame(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsActuator_* mjs_asActuator(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSensor_* mjs_asSensor(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsFlex_* mjs_asFlex(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsPair_* mjs_asPair(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsEquality_* mjs_asEquality(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsExclude_* mjs_asExclude(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTendon_* mjs_asTendon(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsNumeric_* mjs_asNumeric(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsText_* mjs_asText(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTuple_* mjs_asTuple(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsKey_* mjs_asKey(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsMesh_* mjs_asMesh(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsHField_* mjs_asHField(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsSkin_* mjs_asSkin(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsTexture_* mjs_asTexture(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsMaterial_* mjs_asMaterial(mjsElement_* element);
+
+[DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
+public static unsafe extern mjsPlugin_* mjs_asPlugin(mjsElement_* element);
 
 [DllImport("mujoco", CallingConvention = CallingConvention.Cdecl)]
 public static unsafe extern void mj_printFormattedModel(mjModel_* m, [MarshalAs(UnmanagedType.LPStr)]string filename, [MarshalAs(UnmanagedType.LPStr)]string float_format);
